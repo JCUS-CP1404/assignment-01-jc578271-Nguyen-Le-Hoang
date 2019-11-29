@@ -8,7 +8,7 @@ GitHub URL:
 
 def main():
     """..."""
-    print("Movies To Watch 1.0 - by <Your Name>")
+    print("Movies To Watch 1.0 - by <Your Hoang>")
 
 
 if __name__ == '__main__':
