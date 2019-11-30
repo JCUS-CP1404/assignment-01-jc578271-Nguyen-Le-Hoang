@@ -9,44 +9,63 @@ def main():
     """..."""
     print("Movies To Watch 1.0 - by <Nguyen Le Hoang>")
 
-    print("""
-    Menu:
-    L - List movies
-    A - Add new movie
-    W - Watch movie
-    Q - Quit
-    """)
+    in_file = open('movies.csv' ,'r')
+
     while True:
+        print("""
+        Menu:
+        L - List movies
+        A - Add new movie
+        W - Watch movie
+        Q - Quit
+        """)
         choiceInMenu = input(">>> ").upper()
         if choiceInMenu == "L":
-            listMovie()
+            listMovie(in_file)
+
+    in_file.close()
 
 
-def listMovie():
-    in_file = open('movies.csv' ,'r')
+def listMovie(in_file):
+    # reach every movie
     movies = in_file.read().split('\n')
-    maxLength = 0
-    maxLengthTitle = ''
+    
+    index = 0
+    numberUnwatched = 0
+    numberWatched = 0
+    
+    # reach every element in each
     for movie in movies:
         elements = movie.split(',')
-        # print(elements[0], elements[1], elements[2], elements[3])
+        print(index, end='. ')
+
+        # check * for unwatched movies
+        if elements[3] == 'u':
+            numberUnwatched += 1
+            print('* ', end='')
+        elif elements[3] == 'w':
+            numberWatched += 1
+            print('  ', end='')
+
+        print(elements[0], end= algin(movies,elements[0]))
+        print(' - {0} ({1})'.format( elements[1], elements[2]))
+        index += 1
+    print()
+    print('{0} movies watched, {1} movies still to watch'.format(numberWatched, numberUnwatched))
+            
+def algin(movies,movieName):
+    maxLength = 0
+    space = ''
+    for movie in movies:
+        elements = movie.split(',')
         for element in elements:
             if maxLength < len(element):
-                maxLengthTitle = element
+                maxLength = len(element)
             else:
-                maxLengthTitle = maxLengthTitle
-    print(maxLengthTitle)
-    in_file.close()
-            
-        
-# def findingTheLongestTitle(elements):
-#     maxLength = 0
-#     for element in elements:
-#         if maxLength < len(element):
-#             maxLengthTitle = element
-#         else:
-#             continue
-#         print(maxLengthTitle)
+                continue
+    for i in range(maxLength - len(movieName)):
+        space += ' '
+    return space
 
 
 if __name__ == '__main__':
