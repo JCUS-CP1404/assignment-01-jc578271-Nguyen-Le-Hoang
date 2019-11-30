@@ -24,8 +24,29 @@ def main():
 
 def listMovie():
     in_file = open('movies.csv' ,'r')
-
-    print(in_file)
+    movies = in_file.read().split('\n')
+    maxLength = 0
+    maxLengthTitle = ''
+    for movie in movies:
+        elements = movie.split(',')
+        # print(elements[0], elements[1], elements[2], elements[3])
+        for element in elements:
+            if maxLength < len(element):
+                maxLengthTitle = element
+            else:
+                maxLengthTitle = maxLengthTitle
+    print(maxLengthTitle)
+    in_file.close()
+            
+        
+# def findingTheLongestTitle(elements):
+#     maxLength = 0
+#     for element in elements:
+#         if maxLength < len(element):
+#             maxLengthTitle = element
+#         else:
+#             continue
+#         print(maxLengthTitle)
 
 
 if __name__ == '__main__':
