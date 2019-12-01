@@ -8,31 +8,34 @@ GitHub URL: https://github.com/jc578271/assignment1.git
 def main():
     """..."""
     print("Movies To Watch 1.0 - by <Nguyen Le Hoang>")
-
-    in_file = open('movies.csv' ,'r')
+    
+    
+    in_file = open('movies.csv' ,'r+')
+    movies = in_file.readlines()
 
     while True:
         print("""
-        Menu:
-        L - List movies
-        A - Add new movie
-        W - Watch movie
-        Q - Quit
+    Menu:
+    L - List movies
+    A - Add new movie
+    W - Watch movie
+    Q - Quit
         """)
-        choiceInMenu = input(">>> ").upper()
+        choiceInMenu = input("\t>>> ").upper()
         if choiceInMenu == "L":
-            listMovie(in_file)
-
+            listMovie(movies)
+        elif choiceInMenu == "W":
+            watchingMovie(movies)
+   
     in_file.close()
 
-
-def listMovie(in_file):
+def listMovie(movies):
+    
     # reach every movie
-    movies = in_file.read().split('\n')
     
     index = 0
-    numberUnwatched = 0
-    numberWatched = 0
+    countUnwatched = 0
+    countWatched = 0
     
     # reach every element in each
     for movie in movies:
@@ -40,18 +43,19 @@ def listMovie(in_file):
         print(index, end='. ')
 
         # check * for unwatched movies
-        if elements[3] == 'u':
-            numberUnwatched += 1
+        if 'u' in elements[3]:
+            countUnwatched += 1
             print('* ', end='')
-        elif elements[3] == 'w':
-            numberWatched += 1
+        elif 'w' in elements[3]:
+            countWatched += 1
             print('  ', end='')
 
         print(elements[0], end= algin(movies,elements[0]))
         print(' - {0} ({1})'.format( elements[1], elements[2]))
         index += 1
     print()
-    print('{0} movies watched, {1} movies still to watch'.format(numberWatched, numberUnwatched))
+    print('{0} movies watched, {1} movies still to watch'.format(countWatched, countUnwatched))
+
             
 def algin(movies,movieName):
     maxLength = 0
@@ -66,6 +70,22 @@ def algin(movies,movieName):
     for i in range(maxLength - len(movieName)):
         space += ' '
     return space
+
+def watchingMovie(movies):
+    choiceMovie = int(input("Enter the number of a movie to mark as watched \n\t>>> "))
+
+    # Split elements by ','
+    elements = movies[choiceMovie].split(',')
+    if elements[3] == 'u\n':
+        # replace 'u' by 'w'
+        elements[3] = elements[3].replace('u\n','w\n')
+
+        # join elements into movies
+        movies[choiceMovie] = ','.join(elements)
+        print('{} watched'.format(elements[0]))
+    else:
+        print('You have already watched {}'.format(elements[0]))
+    
 
 
 if __name__ == '__main__':
