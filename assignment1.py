@@ -1,7 +1,7 @@
 """
 Name: Nguyen Le Hoang
 Date started: 29/11/2019
-GitHub URL: https://github.com/jc578271/assignment1.git
+GitHub URL: https://github.com/JCUS-CP1404/assignment-01-jc578271
 """
 
 
