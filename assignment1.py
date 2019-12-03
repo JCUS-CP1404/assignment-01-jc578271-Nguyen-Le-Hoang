@@ -25,7 +25,9 @@ def main():
         if choiceInMenu == "L":
             listMovie(movies)
         elif choiceInMenu == "W":
-            watchingMovie(movies)
+            if allMoviesWatched(movies) == True:
+                print('You have watched all movies')
+            else: watchingMovie(movies)
         elif choiceInMenu == "A":
             addMovie(movies)
         elif choiceInMenu == "Q":
@@ -112,6 +114,20 @@ def watchingMovie(movies):
         except Exception:
             print('You have already watched {}'.format(elements[0]))
             break
+
+
+def allMoviesWatched(movies):
+    checkAllWatched = True
+    count = 0
+    for movie in movies:
+        elements = movie.split(',')
+        if 'u' in elements[3]:
+            count += 1
+    if count > 0:
+        checkAllWatched = False
+    else:
+        pass
+    return checkAllWatched
         
 
 #=============
@@ -121,8 +137,9 @@ def addMovie(movies):
     titleMovie = errorTextHandler('Title: ')
     yearMovie = errorNumberHandler('Year: ')
     categoryMovie = errorTextHandler('Category: ')
+    movies[-1] = movies[-1] + '\n'
     #add new movie in movies
-    newMovie = ('\n{},{},{},u'.format(titleMovie,yearMovie,categoryMovie))
+    newMovie = ('{},{},{},u'.format(titleMovie,yearMovie,categoryMovie))
     movies.append(newMovie)
     #print result
     print()
